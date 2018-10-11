@@ -37,6 +37,8 @@ public class SimpleTweaker implements ITweaker {
 
     public static final Logger LOGGER = LogManager.getLogger("SimpleTweaker");
 
+    private static boolean setupTransformer = false;
+
     /**
      * The raw game launch arguments that are provided in {@link SimpleTweaker#acceptOptions(List, File, File, String)}
      */
@@ -52,8 +54,7 @@ public class SimpleTweaker implements ITweaker {
 
     @Override
     public void injectIntoClassLoader(LaunchClassLoader classLoader) {
-        classLoader.addClassLoaderExclusion("io.github.impactdevelopment.simpletweaker.");
-        classLoader.registerTransformer(SimpleTransformer.class.getName());
+        doInitialSetup(classLoader);
     }
 
     @Override
@@ -86,6 +87,14 @@ public class SimpleTweaker implements ITweaker {
         if (!args.contains("--" + label) && value != null) {
             this.args.add("--" + label);
             this.args.add(value);
+        }
+    }
+
+    private static void doInitialSetup(LaunchClassLoader classLoader) {
+        if (!setupTransformer) {
+            classLoader.addClassLoaderExclusion("io.github.impactdevelopment.simpletweaker.");
+            classLoader.registerTransformer(SimpleTransformer.class.getName());
+            setupTransformer = true;
         }
     }
 }

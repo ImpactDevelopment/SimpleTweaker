@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+}
+
+group 'io.github.impactdevelopment'
+version '1.0'
+
+sourceCompatibility = targetCompatibility = 1.8
+compileJava {
+    sourceCompatibility = targetCompatibility = 1.8
+}
+
+repositories {
+    mavenCentral()
+
+    maven {
+        url 'https://libraries.minecraft.net/'
+    }
+}
+
+dependencies {
+    compile 'net.minecraft:launchwrapper:1.12'
+}

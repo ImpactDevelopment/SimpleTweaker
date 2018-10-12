@@ -46,6 +46,7 @@ public class SimpleTransformer implements IClassTransformer {
      */
     private final List<ITransformer> transformers = new ArrayList<>();
 
+    // This should only be used by the launchwrapper
     public SimpleTransformer() {
         // Set the instance
         instance = this;
@@ -56,7 +57,7 @@ public class SimpleTransformer implements IClassTransformer {
         if (basicClass == null)
             return null;
 
-        List<ITransformer> transformers = getTransformers(transformedName);
+        final List<ITransformer> transformers = getTransformers(transformedName);
 
         if (!transformers.isEmpty()) {
             try {
@@ -109,12 +110,12 @@ public class SimpleTransformer implements IClassTransformer {
      */
     private List<ITransformer> getTransformers(String name) {
         return transformers.stream()
-                .filter(transformer -> transformer.getTargets().length == 0 || Arrays.asList(transformer.getTargets()).contains(name))
+                .filter(transformer -> transformer.isTarget(name))
                 .collect(Collectors.toList());
     }
 
     /**
-     * Instantiates a new transformer using reflections. Transformer must
+     * Instantiates a new transformer using reflection. Transformer must
      * have a constructor that takes no parameters.
      *
      * @param clazz The transformer class name

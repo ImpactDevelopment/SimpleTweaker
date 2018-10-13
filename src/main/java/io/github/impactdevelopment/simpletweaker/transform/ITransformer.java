@@ -34,13 +34,12 @@ public interface ITransformer {
     void transform(ClassNode cn);
 
     /**
-     * Returns the target class names. If none are returned,
-     * then it is assumed that the transformer is targetting
-     * all classes.
+     * Returns whether or not a class is targeted by this transformer.
+     * The given class may or may not be given in an obfuscated form.
      *
-     * @return Target class names
+     * @return True if this transformer targets the given class
      */
-    default String[] getTargets() {
-        return new String[0];
+    default boolean isTarget(String className) {
+        return true;
     }
 }

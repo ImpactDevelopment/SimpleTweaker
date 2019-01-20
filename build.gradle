@@ -29,5 +29,7 @@ repositories {
 }
 
 dependencies {
-    compile 'net.minecraft:launchwrapper:1.12'
+    compile ('net.minecraft:launchwrapper:1.12') {
+        exclude module: 'jopt-simple' // launchwrapper has old jopt-simple not used by minecraft
+    }
 }
